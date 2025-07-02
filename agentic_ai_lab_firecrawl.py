@@ -4,8 +4,8 @@ from fpdf import FPDF
 
 # ===== CONFIGURATION =====
 FIRECRAWL_API_KEY = 'fc-2f5d88a5251c404c8123da49496518f4'  # Replace with your key
-FIRECRAWL_URL = 'https://api.firecrawl.dev/v1/scrape'  # Fixed URL string (removed trailing '*')
-MODEL_NAME = 'mistral'  # Use just 'mistral' as Ollama doesn't support 'mistral:7b-q4'
+FIRECRAWL_URL = 'https://api.firecrawl.dev/v1/scrape' 
+MODEL_NAME = 'mistral' 
 
 # ===== DATA COLLECTION FROM WEB =====
 def collect_data_from_url(url):
