@@ -3,9 +3,9 @@ import requests
 from fpdf import FPDF
 
 # ===== CONFIGURATION =====
-FIRECRAWL_API_KEY = 'fc-2f5d88a5251c404c8123da49496518f4'  # Replace with your key
+FIRECRAWL_API_KEY = 'fc-2f5d88a5251c404c8123da49496518f4'
 FIRECRAWL_URL = 'https://api.firecrawl.dev/v1/scrape' 
-MODEL_NAME = 'mistral' 
+MODEL_NAME = 'mistral:7b-q4'
 
 # ===== DATA COLLECTION FROM WEB =====
 def collect_data_from_url(url):
