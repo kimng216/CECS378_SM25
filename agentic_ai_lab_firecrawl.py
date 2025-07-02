@@ -5,7 +5,7 @@ from fpdf import FPDF
 # ===== CONFIGURATION =====
 FIRECRAWL_API_KEY = 'fc-2f5d88a5251c404c8123da49496518f4'
 FIRECRAWL_URL = 'https://api.firecrawl.dev/v1/scrape' 
-MODEL_NAME = 'mistral:7b-q4'
+MODEL_NAME = 'mistral'
 
 # ===== DATA COLLECTION FROM WEB =====
 def collect_data_from_url(url):
@@ -14,16 +14,26 @@ def collect_data_from_url(url):
         'Authorization': f'Bearer {FIRECRAWL_API_KEY}'
     }
     json_data = {
-        'url': url,
-        'dynamic': False,
-        'options': {
-            'scrapeType': 'text'
-        }
+        'url': url
     }
     response = requests.post(FIRECRAWL_URL, headers=headers, json=json_data)
-    response.raise_for_status()
+    
+    try:
+        response.raise_for_status()
+    except requests.exceptions.HTTPError as e:
+        print(f"HTTP error: {e}")
+        try:
+            print("Response content:", response.json())
+        except Exception:
+            print("Response content:", response.text)
+        return None
+    
     data = response.json()
-    return data.get('text', '')
+    
+    if not data.get('text', ''):
+        print("Full API response:", data)
+
+    return data.get('text') or data.get('data', {}).get('markdown', '')
 
 # ===== PROCESS USING OFFLINE LLM =====
 def process_with_llm(content):
